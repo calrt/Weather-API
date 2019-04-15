@@ -13,8 +13,10 @@ const apiKeys = [] // 5 x string constants
 
 // Have a URL that accepts both a city name and country name
 
-app.get('/', (req, res) => {
+app.get('/:params', (req, res) => {
   res.status(200).send("GET request received!")
+  console.log("Params:", req.params)
+  console.log(req.headers)
 })
 
 // Based upon these inputs, and the API Key, your service should decide whether or not to call the OpenWeatherMap name service.
