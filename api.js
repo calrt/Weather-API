@@ -9,24 +9,32 @@ app.use(express.json())
 const port = 3000
 app.listen(port, console.log(`Listening on port ${port}...`))
 
-// 5 x string constants (may need to seperate these into seperate arrays, one with key and the other with timestamp and apiKey index)
+var apiKeys = {
+  apikey1: 5,
+  apikey2: 5,
+  apikey3: 5,
+  apikey4: 5,
+  apikey5: 5
+}
 
-var apiKeys = [
-  {apikey1: Date.now()},
-  {apikey2: Date.now()},
-  {apikey3: Date.now()},
-  {apikey4: Date.now()},
-  {apikey4: Date.now()}
-]
-
-// Check if API Key exist
-// Check whether it has been used more than 5 times in the hour ie. 720,000 milleseconds have passed since the last time it has been used. 
+setInterval(function(){
+  Object.keys(apiKeys).forEach(key => {
+    if(apiKeys[key] < 5){
+      apiKeys[key] ++
+    }
+  })
+}, 60*60*1000)
 
 const checkAPIKey = (req, res, next) => {
   const headers = req.headers
   const apikey = headers.apikey
-  if(apikey in apiKeys[0]){
-    next()
+  if(apikey in apiKeys){
+    if (apiKeys[apikey] > 0) {
+      apiKeys[apikey] = apiKeys[apikey] - 1 
+      next()
+    } else {
+      res.status(429).send("Error: Request limit has been exceeded (Max calls 5 per hour).")
+    }
   } else {
     res.status(403).send("Error: That API key does not exist.")
   }
@@ -34,7 +42,6 @@ const checkAPIKey = (req, res, next) => {
 
 app.use(checkAPIKey)
 
-// Retrieve Weather
 const retrieveWeather = (city, country) => {
   return new Promise((resolve, reject) => {
     const apiKey = '788fd636d2797af705dd3d71c77f89d5'
@@ -61,8 +68,6 @@ const retrieveWeather = (city, country) => {
       })
     })
 }
-
-// Perform GET request
 
 app.get('/:params', (req, res) => {
   const params = req.params.params.split("&")
