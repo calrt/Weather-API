@@ -11,20 +11,28 @@ app.listen(port, console.log(`Listening on port ${port}...`))
 
 // 5 x string constants (may need to seperate these into seperate arrays, one with key and the other with timestamp and apiKey index)
 
-const apiKeys = [
-  {apiKey: "apikey1", lastUsed: null},
-  {apiKey: "apikey2", lastUsed: null},
-  {apiKey: "apikey3", lastUsed: null},
-  {apiKey: "apikey4", lastUsed: null},
-  {apiKey: "apikey4", lastUsed: null}
+var apiKeys = [
+  {apikey1: Date.now()},
+  {apikey2: Date.now()},
+  {apikey3: Date.now()},
+  {apikey4: Date.now()},
+  {apikey4: Date.now()}
 ]
 
-// Check API Key (requires middleware)
+// Check if API Key exist
+// Check whether it has been used more than 5 times in the hour ie. 720,000 milleseconds have passed since the last time it has been used. 
 
-const checkAPIKey = () => {
-  
+const checkAPIKey = (req, res, next) => {
+  const headers = req.headers
+  const apikey = headers.apikey
+  if(apikey in apiKeys[0]){
+    next()
+  } else {
+    res.status(403).send("Error: That API key does not exist.")
+  }
 }
 
+app.use(checkAPIKey)
 
 // Retrieve Weather
 const retrieveWeather = (city, country) => {
@@ -60,6 +68,7 @@ app.get('/:params', (req, res) => {
   const params = req.params.params.split("&")
   const city = params[0].split("=")[1]
   const country = params[1].split("=")[1]
+
   retrieveWeather(city, country)
     .then((data) => res.status(data.status).send(data.message))
     .catch((data) => res.status(data.status).send(data.message))
