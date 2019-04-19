@@ -1,6 +1,6 @@
 # RESTful Weather API
 
-This is an API for making calls to the [OpenWeather](https://openweathermap.org/api) service using [Node.js](https://nodejs.org/en/), [Express](https://expressjs.com/en/api.html), and [Axios](https://github.com/axios/axios).
+This is an API for making calls to the [OpenWeatherMap](https://openweathermap.org/api) service using [Node.js](https://nodejs.org/en/), [Express](https://expressjs.com/en/api.html), and [Axios](https://github.com/axios/axios).
 
 ### Features:
 - API key scheme.
