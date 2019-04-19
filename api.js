@@ -33,7 +33,7 @@ const checkAPIKey = (req, res, next) => {
       apiKeys[apikey] = apiKeys[apikey] - 1 
       next()
     } else {
-      res.status(429).send("Error: Request limit has been exceeded (Max calls 5 per hour).")
+      res.status(429).send("Error: Request limit has been exceeded (max. calls 5 per hour).")
     }
   } else {
     res.status(403).send("Error: That API key does not exist.")
