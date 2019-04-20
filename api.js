@@ -22,7 +22,7 @@ setInterval(function(){
       apiKeys[key] ++
     }
   })
-}, 60*60*1000)
+}, 12*60*1000) // If you have 5 calls an hour, thats the equivalent of one every 12 minutes. Implementing it this way means it acts as a moving 60 minutes.
 
 const checkAPIKey = (req, res, next) => {
   const headers = req.headers
@@ -72,7 +72,6 @@ app.get('/:params', (req, res) => {
   const params = req.params.params.split("&")
   const city = params[0].split("=")[1]
   const country = params[1].split("=")[1]
-
   retrieveWeather(city, country)
     .then((data) => res.status(data.status).send(data.message))
     .catch((data) => res.status(data.status).send(data.message))
