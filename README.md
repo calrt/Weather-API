@@ -18,6 +18,11 @@ To start the Express server run:
 
 ```bash
 npm start
+```  
+  
+Replace the below within ```retrieveWeather()``` with an [API key supplied from the Open Weather Map service](https://openweathermap.org/api).
+```javascript
+const apiKey = process.env.WEATHER_API_KEY
 ```
 
 ## Usage
@@ -31,7 +36,9 @@ For example:
 Provide a valid API key within your request headers in the form of:
 ```bash
 apikey: {yourAPIKey}
-``` 
+```  
+
+Valid API keys can be found within the apiKeys object.
 
 ## Dependencies
 - [Express](https://expressjs.com/en/api.html)
