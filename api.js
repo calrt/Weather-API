@@ -1,3 +1,4 @@
+require('dotenv').config()
 const axios = require('axios')
 const express = require("express")
 
@@ -43,7 +44,7 @@ app.use(checkAPIKey)
 
 const retrieveWeather = (city, country) => {
   return new Promise((resolve, reject) => {
-    const apiKey = '788fd636d2797af705dd3d71c77f89d5'
+    const apiKey = process.env.WEATHER_API_KEY
     const weatherURL = 'http://api.openweathermap.org/data/2.5/weather?q='
     const requestURL = `${weatherURL}${city},${country}&appid=${apiKey}`
     axios.get(requestURL)
