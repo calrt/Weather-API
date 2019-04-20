@@ -1,4 +1,4 @@
-# RESTful Weather API
+# Weather API
 
 This is an API for making calls to the [OpenWeatherMap](https://openweathermap.org/api) service using [Node.js](https://nodejs.org/en/), [Express](https://expressjs.com/en/api.html), and [Axios](https://github.com/axios/axios).
 
@@ -36,6 +36,14 @@ apikey: {yourAPIKey}
 ## Dependencies
 - [Express](https://expressjs.com/en/api.html)
 - [Axios](https://github.com/axios/axios)
+
+## Testing
+In order to test the functionality of the API I conducted manual scenario tests to ensure the desired features were correctly implemented.  
+
+✅ Incorrect city parameters returns "Error: city not found" with 404 Not Found status.  
+✅ No/incorrect API key returns "Error: That API key does not exist." with 403 Forbidden status.  
+✅ Exceeding the API call limit returns "Error: Request limit has been exceeded (max. calls 5 per hour)." with 429 Too Many Requests status.  
+✅ Valid call (correct API key, within request limit, and with valid city and country parameters) returns "Your weather report: {current weather description}" with 200 OK status.  
 
 
 ## License
